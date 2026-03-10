@@ -4,3 +4,9 @@ dist
 .env
 .env.local
 .pnpm-store/
+
+# Compiled artifacts in src (tsc should emit to dist only)
+**/src/**/*.js
+**/src/**/*.d.ts
+**/src/**/*.js.map
+**/src/**/*.d.ts.map

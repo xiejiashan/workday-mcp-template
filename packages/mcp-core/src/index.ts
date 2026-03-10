@@ -1,11 +1,11 @@
-export { createMcpServer, type CreateMcpServerOptions } from "./mcpServer.ts";
+export { createMcpServer, type CreateMcpServerOptions } from "./mcpServer.js";
 export {
   startHttpServer,
   type StartHttpServerOptions,
   type StartedHttpServer,
-} from "./startHttpServer.ts";
+} from "./startHttpServer.js";
 export {
   startStdioServer,
   type StartStdioServerOptions,
   type StartedStdioServer,
-} from "./startStdioServer.ts";
+} from "./startStdioServer.js";

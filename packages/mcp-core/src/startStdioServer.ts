@@ -1,7 +1,7 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import { createMcpServer } from "./mcpServer.ts";
+import { createMcpServer } from "./mcpServer.js";
 
 export type StartStdioServerOptions = {
   /**

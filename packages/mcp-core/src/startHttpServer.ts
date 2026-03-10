@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import { createMcpServer } from "./mcpServer.ts";
+import { createMcpServer } from "./mcpServer.js";
 
 export type StartHttpServerOptions = {
   port: number;
@@ -68,7 +68,7 @@ export async function startHttpServer(
           res.setHeader("content-type", "application/json; charset=utf-8");
         }
         res.end(JSON.stringify({ error: "Internal server error" }));
-         
+
         console.error("MCP transport error", err);
       });
     }
