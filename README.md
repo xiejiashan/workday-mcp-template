@@ -14,4 +14,5 @@ The repository focuses on:
 
 The goal is to allow developers and Workday customers to quickly build AI agent tools that interact with workforce systems.
 
-The project intentionally relies only on publicly available Workday information and avoids embedding private tenant details or undocumented APIs.
+This project is an independent developer template built using publicly available Workday documentation and announcements.
+It is not affiliated with or endorsed by Workday.
