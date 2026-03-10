@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch"
+    "dev": "pnpm --filter @workday-mcp/mcp-core build && pnpm build && node dist/index.js",
+    "dev:stdio": "pnpm --filter @workday-mcp/mcp-core build && pnpm build && node dist/stdio.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@workday-mcp/mcp-core": "workspace:*"
+  },
   "devDependencies": {
+    "tsx": "^4.21.0",
     "typescript": "^5.0.0"
   }
 }
