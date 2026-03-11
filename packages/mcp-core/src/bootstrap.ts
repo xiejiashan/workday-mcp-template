@@ -8,10 +8,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { loadConfig } from "./config/load.js";
 import { createBareMcpServer } from "./mcpServer.js";
 import { createServices } from "./services/index.js";
-import {
-  registerDefault,
-  type ToolRegistrar,
-} from "./registration/register.js";
+import { registerDefault, type ToolRegistrar } from "./tools/register.js";
 
 export type BootstrapOptions = {
   configPath?: string;

@@ -28,7 +28,4 @@ export type {
   HttpClient,
   WorkdayClients,
 } from "./services/types.js";
-export {
-  registerDefault,
-  type ToolRegistrar,
-} from "./registration/register.js";
+export { registerDefault, type ToolRegistrar } from "./tools/register.js";
