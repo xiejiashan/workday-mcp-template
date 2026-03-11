@@ -4,7 +4,7 @@ This project provides a starter template for building MCP servers that integrate
 
 The repository focuses on:
 
-1. reusable MCP server infrastructure
+1. Reusable MCP server infrastructure (config-driven **bootstrap**: load config → init services → create server → register tools → attach stdio/HTTP transport). See [docs/architecture.md](docs/architecture.md#mcp-server-bootstrap).
 
 2. Workday-aligned tool schemas
 

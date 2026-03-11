@@ -1,0 +1,29 @@
+import type { ServerConfig } from "../config/schema.js";
+
+export interface Logger {
+  debug(message: string, ...args: unknown[]): void;
+  info(message: string, ...args: unknown[]): void;
+  warn(message: string, ...args: unknown[]): void;
+  error(message: string, ...args: unknown[]): void;
+}
+
+export interface Auth {
+  validate(token: string | undefined): Promise<boolean>;
+}
+
+export interface HttpClient {
+  fetch(url: string, init?: RequestInit): Promise<Response>;
+}
+
+export interface WorkdayClients {
+  readonly tenantId: string | undefined;
+  readonly baseUrl: string | undefined;
+}
+
+export interface Services {
+  logger: Logger;
+  auth: Auth;
+  httpClient: HttpClient;
+  workdayClients: WorkdayClients;
+  config: ServerConfig;
+}

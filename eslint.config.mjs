@@ -14,6 +14,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     files: ["**/*.ts"],
+    ignores: ["**/*.d.ts"],
     languageOptions: {
       parserOptions: {
         project: true,

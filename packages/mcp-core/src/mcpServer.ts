@@ -5,14 +5,20 @@ export type CreateMcpServerOptions = {
   version?: string;
 };
 
-export function createMcpServer(
+/** Creates an MCP server with no tools/resources/prompts (for use with bootstrap + registrar). */
+export function createBareMcpServer(
   options: CreateMcpServerOptions = {}
 ): McpServer {
-  const server = new McpServer({
+  return new McpServer({
     name: options.name ?? "@workday-mcp/server",
     version: options.version ?? "0.0.1",
   });
+}
 
+export function createMcpServer(
+  options: CreateMcpServerOptions = {}
+): McpServer {
+  const server = createBareMcpServer(options);
   server.registerTool(
     "ping",
     {
@@ -23,6 +29,5 @@ export function createMcpServer(
       content: [{ type: "text", text: "pong" }],
     })
   );
-
   return server;
 }
