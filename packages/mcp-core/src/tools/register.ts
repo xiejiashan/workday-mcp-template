@@ -5,6 +5,7 @@ import { fetchGet } from "../services/httpClient.js";
 import { stringifyJson } from "../utils/json-helpers.js";
 import { buildWorkdayJobsUrl } from "./getJobPostings/url.js";
 import { resolveGetJobPostingsInput } from "./getJobPostings/input.js";
+
 export type ToolRegistrar = (
   server: McpServer,
   services: Services
@@ -14,17 +15,6 @@ export async function registerDefault(
   server: McpServer,
   services: Services
 ): Promise<void> {
-  server.registerTool(
-    "ping",
-    {
-      title: "Ping",
-      description: "Health check tool (returns pong).",
-    },
-    async () => ({
-      content: [{ type: "text", text: "pong" }],
-    })
-  );
-
   server.registerTool(
     "get_job_postings",
     {

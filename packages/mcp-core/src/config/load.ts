@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { isAbsolute } from "node:path";
 import { resolve } from "node:path";
 
 import { serverConfigSchema, type ServerConfig } from "./schema.js";
@@ -30,6 +31,11 @@ function parseConfigFile(path: string): unknown {
 
 export type LoadConfigOptions = {
   configPath?: string;
+  /**
+   * Base directory for resolving relative `configPath`.
+   * If omitted, uses `process.cwd()`. Ignored when `configPath` is absolute.
+   */
+  configBasePath?: string;
 };
 
 export function loadConfig(options: LoadConfigOptions = {}): ServerConfig {
@@ -37,7 +43,10 @@ export function loadConfig(options: LoadConfigOptions = {}): ServerConfig {
 
   let fileRaw: unknown = {};
   if (options.configPath) {
-    const resolved = resolve(process.cwd(), options.configPath);
+    const base = options.configBasePath ?? process.cwd();
+    const resolved = isAbsolute(options.configPath)
+      ? options.configPath
+      : resolve(base, options.configPath);
     fileRaw = parseConfigFile(resolved);
   }
 
