@@ -1,0 +1,9 @@
+{
+  "auth": {
+    "type": "apiKey"
+  },
+  "workday": {
+    "tenantId": "mytenant",
+    "baseUrl": "https://mytenant.wd5.myworkdayjobs.com"
+  }
+}

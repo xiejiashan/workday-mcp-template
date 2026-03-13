@@ -173,10 +173,10 @@ function generateTsForSpec(
       `    { title: ${escapeStr(title)}, description: ${escapeStr(description)}, inputSchema: ${zodSchemaExpr} },`
     );
     lines.push(`    async (input: unknown) => {`);
-    lines.push(`      const baseUrl = services.config.openapi?.baseUrl ?? "";`);
+    lines.push(`      const baseUrl = services.config.workday?.baseUrl ?? "";`);
     lines.push(`      if (!baseUrl) {`);
     lines.push(
-      `        return { content: [{ type: "text", text: JSON.stringify({ error: "openapi.baseUrl not configured" }) }], isError: true };`
+      `        return { content: [{ type: "text", text: JSON.stringify({ error: "workday.baseUrl not configured" }) }], isError: true };`
     );
     lines.push(`      }`);
     lines.push(

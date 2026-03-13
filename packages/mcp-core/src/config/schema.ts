@@ -11,6 +11,7 @@ export type AuthConfig = z.infer<typeof authConfigSchema>;
 
 export const workdayConfigSchema = z.object({
   tenantId: z.string().optional(),
+  /** Base URL for Workday/OpenAPI-backed tools. When unset, derived from tenantId when set. */
   baseUrl: z.string().url().optional(),
 });
 export type WorkdayConfig = z.infer<typeof workdayConfigSchema>;
@@ -22,12 +23,6 @@ export const httpTransportConfigSchema = z.object({
 });
 export type HttpTransportConfig = z.infer<typeof httpTransportConfigSchema>;
 
-export const openapiConfigSchema = z.object({
-  /** Base URL for OpenAPI-backed tools (e.g. https://api.example.com). */
-  baseUrl: z.string().url().optional(),
-});
-export type OpenapiConfig = z.infer<typeof openapiConfigSchema>;
-
 export const serverConfigSchema = z.object({
   name: z.string().default("@workday-mcp/server"),
   version: z.string().default("0.0.1"),
@@ -35,7 +30,6 @@ export const serverConfigSchema = z.object({
   logLevel: z.enum(["debug", "info", "warn", "error"]).default("info"),
   auth: authConfigSchema.default({ type: "none" }),
   workday: workdayConfigSchema.default({}),
-  openapi: openapiConfigSchema.default({}),
   http: httpTransportConfigSchema.optional(),
 });
 export type ServerConfig = z.infer<typeof serverConfigSchema>;

@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "pnpm --filter @workday-mcp/mcp-core build && pnpm build && node dist/index.js"
+    "dev": "pnpm --filter @workday-mcp/mcp-core build && pnpm build && node dist/index.js",
+    "validate:listJobPostings": "tsx scripts/validate-list-job-postings.ts"
   },
   "dependencies": {
     "@workday-mcp/mcp-core": "workspace:*",
     "@workday-mcp/workday-tools": "workspace:*"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "tsx": "^4.21.0",
     "typescript": "^5.0.0"
   }

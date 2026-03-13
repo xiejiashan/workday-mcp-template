@@ -20,13 +20,13 @@ export const openApiToolRegistrar: ToolRegistrar = (
         .strict(),
     },
     async (input: unknown) => {
-      const baseUrl = services.config.openapi?.baseUrl ?? "";
+      const baseUrl = services.config.workday?.baseUrl ?? "";
       if (!baseUrl) {
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify({ error: "openapi.baseUrl not configured" }),
+              text: JSON.stringify({ error: "workday.baseUrl not configured" }),
             },
           ],
           isError: true,

@@ -32,5 +32,21 @@ The recommended way to run the MCP server is via **bootstrap**: a single entry p
 - **transport:** `"stdio"` or `"http"` (default `"http"`).
 - **http:** When transport is HTTP: `port` (default 8787), `host` (default 127.0.0.1), `path` (default `/mcp`).
 - **logLevel:** `"debug"` | `"info"` | `"warn"` | `"error"` (default `"info"`).
-- **auth:** Placeholder: `{ type: "none" }` or `{ type: "apiKey", apiKey?: string }`.
-- **workday:** Placeholder: `{ tenantId?: string, baseUrl?: string }` for future tenant wiring.
+- **auth:** `{ type: "none" }` or `{ type: "apiKey", apiKey?: string }`. When `type` is `"apiKey"`, you can set the key in config or via env: **`MCP_AUTH_API_KEY`** (env overrides config so secrets are not stored in the config file).
+- **workday:** `{ tenantId?: string, baseUrl?: string }`. **baseUrl** is the base URL used for Workday/OpenAPI-backed tools (one URL for both). When unset and **tenantId** is set, it is derived as `https://wd2-impl-services1.workday.com/ccx/api/v1/{tenantId}`. Env **`MCP_WORKDAY_BASE_URL`** overrides **workday.baseUrl**.
+
+## Validation
+
+To confirm the demo server and the **listJobPostings** tool work:
+
+1. **Start the server** (from repo root):  
+   `pnpm --filter @workday-mcp/server-demo dev`  
+   The server listens at `http://127.0.0.1:8787/mcp` (or the configured host/port/path).
+
+2. **Call the tool** in one of these ways:
+   - **Cursor:** Add an MCP server in Cursor settings pointing at the demo app (e.g. `http://127.0.0.1:8787/mcp`). In a chat, ask to list job postings; the **listJobPostings** tool should be used and return a response (or a clear error if `workday.baseUrl` is not configured or the API returns 401/404).
+   - **Validation script:** With the server running, from repo root run:  
+     `pnpm --filter @workday-mcp/server-demo validate:listJobPostings`  
+     The script connects to the server, lists tools, calls **listJobPostings** with `{ limit: 5 }`, and prints the result.
+
+Without valid **workday.baseUrl** (or tenant-derived URL) you get a tool error: `"workday.baseUrl not configured"`. Without valid auth for the Workday API, the tool may return an HTTP error (e.g. 401). Use **config.example.json** as a reference for auth and tenant config; set **MCP_AUTH_API_KEY** in the environment instead of putting the key in the config file.

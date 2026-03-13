@@ -1,9 +1,6 @@
 {
-  "openapi": {
-    "baseUrl": "https://httpbin.org"
-  },
   "workday": {
     "tenantId": "exampleTenant",
-    "baseUrl": "https://exampleTenant.wd5.myworkdayjobs.com"
+    "baseUrl": "https://httpbin.org"
   }
 }

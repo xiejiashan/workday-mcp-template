@@ -17,6 +17,26 @@ function fromEnv(): Record<string, unknown> {
       ...(process.env.HOST != null && { host: process.env.HOST }),
     };
   }
+  if (process.env[`${ENV_PREFIX}AUTH_API_KEY`] != null) {
+    raw.auth = {
+      type: "apiKey",
+      apiKey: process.env[`${ENV_PREFIX}AUTH_API_KEY`],
+    };
+  }
+  if (
+    process.env[`${ENV_PREFIX}WORKDAY_BASE_URL`] != null ||
+    process.env[`${ENV_PREFIX}WORKDAY_TENANT_ID`] != null
+  ) {
+    raw.workday = {
+      ...((raw.workday as Record<string, unknown>) ?? {}),
+      ...(process.env[`${ENV_PREFIX}WORKDAY_BASE_URL`] != null && {
+        baseUrl: process.env[`${ENV_PREFIX}WORKDAY_BASE_URL`],
+      }),
+      ...(process.env[`${ENV_PREFIX}WORKDAY_TENANT_ID`] != null && {
+        tenantId: process.env[`${ENV_PREFIX}WORKDAY_TENANT_ID`],
+      }),
+    };
+  }
   return raw;
 }
 
@@ -58,7 +78,23 @@ export function loadConfig(options: LoadConfigOptions = {}): ServerConfig {
     envRaw as Record<string, unknown>
   );
 
+  deriveWorkdayBaseUrlFromTenant(merged);
+
   return serverConfigSchema.parse(merged);
+}
+
+const DEFAULT_WORKDAY_API_HOST = "wd2-impl-services1.workday.com";
+
+/** When workday.baseUrl is missing and workday.tenantId is set, set baseUrl to the Recruiting API URL. */
+function deriveWorkdayBaseUrlFromTenant(merged: Record<string, unknown>): void {
+  const workday = merged.workday as Record<string, unknown> | undefined;
+  if (!workday) return;
+  const baseUrl = workday.baseUrl as string | undefined;
+  if (baseUrl != null && baseUrl !== "") return;
+  const tenantId = workday.tenantId as string | undefined;
+  if (tenantId == null || tenantId === "") return;
+  (merged.workday as Record<string, unknown>).baseUrl =
+    `https://${DEFAULT_WORKDAY_API_HOST}/ccx/api/v1/${tenantId}`;
 }
 
 function defaultConfigObject(): Record<string, unknown> {
@@ -69,7 +105,6 @@ function defaultConfigObject(): Record<string, unknown> {
     logLevel: "info",
     auth: { type: "none" },
     workday: {},
-    openapi: {},
     http: { port: 8787, host: "127.0.0.1", path: "/mcp" },
   };
 }
