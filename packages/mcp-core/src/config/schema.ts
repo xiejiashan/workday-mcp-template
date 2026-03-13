@@ -4,8 +4,17 @@ export const transportSchema = z.enum(["stdio", "http"]);
 export type Transport = z.infer<typeof transportSchema>;
 
 export const authConfigSchema = z.object({
-  type: z.enum(["none", "apiKey"]).default("none"),
-  apiKey: z.string().optional(),
+  type: z.enum(["none", "oauthClientCredentials"]).default("none"),
+  /** OAuth2 client_credentials token endpoint URL. Required when type is oauthClientCredentials. */
+  tokenUrl: z.string().url().optional(),
+  /** OAuth2 client id. */
+  clientId: z.string().optional(),
+  /** OAuth2 client secret. */
+  clientSecret: z.string().optional(),
+  /** Optional OAuth2 scope (space-separated). */
+  scope: z.string().optional(),
+  /** Optional audience parameter for some IdPs. */
+  audience: z.string().optional(),
 });
 export type AuthConfig = z.infer<typeof authConfigSchema>;
 

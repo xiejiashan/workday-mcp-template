@@ -1,6 +1,14 @@
 {
+  "auth": {
+    "clientId": "created_client_id",
+    "clientSecret": "created_client_secret",
+    "tokenEndpoint": "endpoints_for_token_exchange",
+    "username:": "user_login",
+    "password:": "user_password",
+    "optional token": "optional_provided_token"
+  },
   "workday": {
-    "tenantId": "exampleTenant",
-    "baseUrl": "https://httpbin.org"
+    "tenant": "mytenant",
+    "baseUrl": "https://mytenant.wd5.myworkdayjobs.com"
   }
 }

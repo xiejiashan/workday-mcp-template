@@ -32,7 +32,7 @@ The recommended way to run the MCP server is via **bootstrap**: a single entry p
 - **transport:** `"stdio"` or `"http"` (default `"http"`).
 - **http:** When transport is HTTP: `port` (default 8787), `host` (default 127.0.0.1), `path` (default `/mcp`).
 - **logLevel:** `"debug"` | `"info"` | `"warn"` | `"error"` (default `"info"`).
-- **auth:** `{ type: "none" }` or `{ type: "apiKey", apiKey?: string }`. When `type` is `"apiKey"`, you can set the key in config or via env: **`MCP_AUTH_API_KEY`** (env overrides config so secrets are not stored in the config file).
+- **auth:** Supports `{ type: "none" }` or `{ type: "oauthClientCredentials", tokenUrl: string, clientId: string, clientSecret: string, scope?: string, audience?: string }`. For `oauthClientCredentials`, you can set values in config or via env (**`MCP_AUTH_TYPE=oauthClientCredentials`**, `MCP_AUTH_TOKEN_URL`, `MCP_AUTH_CLIENT_ID`, `MCP_AUTH_CLIENT_SECRET`, `MCP_AUTH_SCOPE`, `MCP_AUTH_AUDIENCE`). Tokens are fetched from `tokenUrl`, cached until `expires_in`, and injected as `Authorization: Bearer <token>` on outbound HTTP calls.
 - **workday:** `{ tenantId?: string, baseUrl?: string }`. **baseUrl** is the base URL used for Workday/OpenAPI-backed tools (one URL for both). When unset and **tenantId** is set, it is derived as `https://wd2-impl-services1.workday.com/ccx/api/v1/{tenantId}`. Env **`MCP_WORKDAY_BASE_URL`** overrides **workday.baseUrl**.
 
 ## Validation
@@ -49,4 +49,4 @@ To confirm the demo server and the **listJobPostings** tool work:
      `pnpm --filter @workday-mcp/server-demo validate:listJobPostings`  
      The script connects to the server, lists tools, calls **listJobPostings** with `{ limit: 5 }`, and prints the result.
 
-Without valid **workday.baseUrl** (or tenant-derived URL) you get a tool error: `"workday.baseUrl not configured"`. Without valid auth for the Workday API, the tool may return an HTTP error (e.g. 401). Use **config.example.json** as a reference for auth and tenant config; set **MCP_AUTH_API_KEY** in the environment instead of putting the key in the config file.
+Without valid **workday.baseUrl** (or tenant-derived URL) you get a tool error: `"workday.baseUrl not configured"`. Without valid auth for the Workday API (for example, misconfigured OAuth client credentials), the tool may return an HTTP error (e.g. 401). Use **config.example.json** as a reference for auth and tenant config and prefer env vars (for example, `MCP_AUTH_CLIENT_SECRET`) instead of putting secrets in the config file.

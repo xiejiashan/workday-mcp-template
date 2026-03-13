@@ -8,7 +8,7 @@ export interface Logger {
 }
 
 export interface Auth {
-  validate(token: string | undefined): Promise<boolean>;
+  validate(): Promise<boolean>;
 }
 
 export interface HttpClient {

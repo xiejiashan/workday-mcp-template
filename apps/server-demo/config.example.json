@@ -1,9 +1,13 @@
 {
   "auth": {
-    "type": "apiKey"
+    "type": "oauthClientCredentials",
+    "tokenUrl": "https://auth.example.com/oauth/token",
+    "clientId": "your-client-id",
+    "clientSecret": "your-client-secret",
+    "scope": "openid profile"
   },
   "workday": {
     "tenantId": "mytenant",
-    "baseUrl": "https://mytenant.wd5.myworkdayjobs.com"
+    "baseUrl": "https://wd2-impl-services1.workday.com/ccx/api/v1/mytenant"
   }
 }

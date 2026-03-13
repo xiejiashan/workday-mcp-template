@@ -16,7 +16,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "inspect:server-demo": "npx -y @modelcontextprotocol/inspector pnpm --filter @workday-mcp/server-demo dev"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",

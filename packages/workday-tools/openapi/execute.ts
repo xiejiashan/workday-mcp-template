@@ -1,5 +1,5 @@
 import type { Services } from "@workday-mcp/mcp-core";
-import { stringifyJson } from "@workday-mcp/mcp-core";
+import { stringifyJson, fetchAccessToken } from "@workday-mcp/mcp-core";
 
 export type ExecuteOpenApiRequestOptions = {
   baseUrl: string;
@@ -48,8 +48,28 @@ export async function executeOpenApiRequest(
 
   const authHeaders: Record<string, string> = {};
   const { auth: authConfig } = services.config;
-  if (authConfig.type === "apiKey" && authConfig.apiKey) {
-    authHeaders["Authorization"] = `Bearer ${authConfig.apiKey}`;
+  if (authConfig.type === "oauthClientCredentials") {
+    try {
+      const accessToken = await fetchAccessToken(
+        services.config,
+        services.httpClient,
+        services.logger
+      );
+      authHeaders["Authorization"] = `Bearer ${accessToken}`;
+    } catch (err) {
+      services.logger.error("OAuth token fetch failed", err);
+      return {
+        content: [
+          {
+            type: "text",
+            text: stringifyJson({
+              error: "OAuth token fetch failed",
+            }),
+          },
+        ],
+        isError: true,
+      };
+    }
   }
 
   const mergedHeaders: Record<string, string> = {

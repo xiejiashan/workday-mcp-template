@@ -17,10 +17,34 @@ function fromEnv(): Record<string, unknown> {
       ...(process.env.HOST != null && { host: process.env.HOST }),
     };
   }
-  if (process.env[`${ENV_PREFIX}AUTH_API_KEY`] != null) {
+  if (
+    process.env[`${ENV_PREFIX}AUTH_TYPE`] != null ||
+    process.env[`${ENV_PREFIX}AUTH_TOKEN_URL`] != null ||
+    process.env[`${ENV_PREFIX}AUTH_CLIENT_ID`] != null ||
+    process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`] != null ||
+    process.env[`${ENV_PREFIX}AUTH_SCOPE`] != null ||
+    process.env[`${ENV_PREFIX}AUTH_AUDIENCE`] != null
+  ) {
     raw.auth = {
-      type: "apiKey",
-      apiKey: process.env[`${ENV_PREFIX}AUTH_API_KEY`],
+      ...(raw.auth as Record<string, unknown> | undefined),
+      ...(process.env[`${ENV_PREFIX}AUTH_TYPE`] != null && {
+        type: process.env[`${ENV_PREFIX}AUTH_TYPE`],
+      }),
+      ...(process.env[`${ENV_PREFIX}AUTH_TOKEN_URL`] != null && {
+        tokenUrl: process.env[`${ENV_PREFIX}AUTH_TOKEN_URL`],
+      }),
+      ...(process.env[`${ENV_PREFIX}AUTH_CLIENT_ID`] != null && {
+        clientId: process.env[`${ENV_PREFIX}AUTH_CLIENT_ID`],
+      }),
+      ...(process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`] != null && {
+        clientSecret: process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`],
+      }),
+      ...(process.env[`${ENV_PREFIX}AUTH_SCOPE`] != null && {
+        scope: process.env[`${ENV_PREFIX}AUTH_SCOPE`],
+      }),
+      ...(process.env[`${ENV_PREFIX}AUTH_AUDIENCE`] != null && {
+        audience: process.env[`${ENV_PREFIX}AUTH_AUDIENCE`],
+      }),
     };
   }
   if (
