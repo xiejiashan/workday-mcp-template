@@ -8,7 +8,8 @@
     "dev": "pnpm --filter @workday-mcp/mcp-core build && pnpm build && node dist/index.js"
   },
   "dependencies": {
-    "@workday-mcp/mcp-core": "workspace:*"
+    "@workday-mcp/mcp-core": "workspace:*",
+    "@workday-mcp/workday-tools": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.21.0",

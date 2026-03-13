@@ -3,7 +3,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { buildServer } from "./buildServer.js";
 import { attachHttpTransport } from "./transport/startHttpServer.js";
 import { attachStdioTransport } from "./transport/startStdioServer.js";
-import { type ToolRegistrar } from "./tools/register.js";
+import { type ToolRegistrar } from "./register.js";
 
 export type BootstrapOptions = {
   configPath?: string;

@@ -1,0 +1,24 @@
+{
+  "name": "@workday-mcp/workday-tools",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/openapi/generated/index.js",
+  "types": "dist/openapi/generated/index.d.ts",
+  "scripts": {
+    "generate:tools": "tsx openapi/generate-openapi-tools.ts",
+    "prebuild": "pnpm run generate:tools",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@workday-mcp/mcp-core": "workspace:*",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.0.0",
+    "yaml": "^2.7.0"
+  }
+}

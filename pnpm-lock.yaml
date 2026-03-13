@@ -38,6 +38,9 @@ importers:
       '@workday-mcp/mcp-core':
         specifier: workspace:*
         version: link:../../packages/mcp-core
+      '@workday-mcp/workday-tools':
+        specifier: workspace:*
+        version: link:../../packages/workday-tools
     devDependencies:
       tsx:
         specifier: ^4.21.0
@@ -59,17 +62,33 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
-  packages/workday-contracts:
-    devDependencies:
-      typescript:
-        specifier: ^5.0.0
-        version: 5.9.3
-
   packages/workday-mock-adapter:
     devDependencies:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+
+  packages/workday-tools:
+    dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.27.1
+        version: 1.27.1(zod@4.3.6)
+      '@workday-mcp/mcp-core':
+        specifier: workspace:*
+        version: link:../mcp-core
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      tsx:
+        specifier: ^4.19.2
+        version: 4.21.0
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+      yaml:
+        specifier: ^2.7.0
+        version: 2.8.2
 
   templates/tenant-starter:
     devDependencies:

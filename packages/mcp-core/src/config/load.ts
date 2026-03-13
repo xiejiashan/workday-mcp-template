@@ -69,6 +69,7 @@ function defaultConfigObject(): Record<string, unknown> {
     logLevel: "info",
     auth: { type: "none" },
     workday: {},
+    openapi: {},
     http: { port: 8787, host: "127.0.0.1", path: "/mcp" },
   };
 }

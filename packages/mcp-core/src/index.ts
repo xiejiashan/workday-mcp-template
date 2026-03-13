@@ -9,4 +9,6 @@ export {
   type BuildServerResult,
 } from "./buildServer.js";
 export { loadConfig, type LoadConfigOptions } from "./config/load.js";
-export { registerDefault, type ToolRegistrar } from "./tools/register.js";
+export { type ToolRegistrar } from "./register.js";
+export type { Services } from "./services/types.js";
+export { stringifyJson, isRecord } from "./utils/json-helpers.js";

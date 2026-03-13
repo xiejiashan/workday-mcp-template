@@ -5,7 +5,7 @@ import type { ServerConfig } from "./config/schema.js";
 import { createMcpServer } from "./mcpServer.js";
 import { createServices } from "./services/index.js";
 import type { Services } from "./services/types.js";
-import { registerDefault, type ToolRegistrar } from "./tools/register.js";
+import { type ToolRegistrar } from "./register.js";
 
 export type BuildServerOptions = {
   configPath?: string;
@@ -20,8 +20,8 @@ export type BuildServerResult = {
 };
 
 /**
- * Loads config, creates services, creates a bare MCP server, and registers default + optional tools.
- * Used by bootstrap so server build is consistent.
+ * Loads config, creates services, creates a bare MCP server, and registers tools when registerTools is provided.
+ * Used by bootstrap; tools are passed in (e.g. from server-demo via bootstrap({ registerTools })).
  */
 export async function buildServer(
   options: BuildServerOptions = {}
@@ -35,7 +35,7 @@ export async function buildServer(
     name: config.name,
     version: config.version,
   });
-  await registerDefault(server, services);
+
   if (options.registerTools) {
     await Promise.resolve(options.registerTools(server, services));
   }

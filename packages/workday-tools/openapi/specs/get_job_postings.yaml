@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Workday Recruiting API
+  version: 1.0.0
+
+servers:
+  - url: https://{host}/ccx/api/v1/{tenant}
+    variables:
+      host:
+        default: wd2-impl-services1.workday.com
+      tenant:
+        default: mytenant
+
+paths:
+  /jobPostings:
+    get:
+      operationId: listJobPostings
+      summary: List recruiting job postings
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: offset
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Job postings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/JobPosting"
+
+components:
+  schemas:
+    JobPosting:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        location:
+          type: string
+        postedDate:
+          type: string

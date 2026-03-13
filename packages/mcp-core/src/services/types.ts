@@ -15,15 +15,9 @@ export interface HttpClient {
   fetch(url: string, init?: RequestInit): Promise<Response>;
 }
 
-export interface WorkdayClients {
-  readonly tenantId: string | undefined;
-  readonly baseUrl: string | undefined;
-}
-
 export interface Services {
   logger: Logger;
   auth: Auth;
   httpClient: HttpClient;
-  workdayClients: WorkdayClients;
   config: ServerConfig;
 }
