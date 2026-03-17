@@ -5,7 +5,7 @@ export function createAuth(config: ServerConfig): Auth {
   const { auth: authConfig } = config;
   return {
     async validate(): Promise<boolean> {
-      if (authConfig.type === "none") return true;
+      if (authConfig.type === "basic") return true;
       if (authConfig.type === "oauthClientCredentials") {
         // Outbound-only auth: we validate by successfully fetching an access token when needed.
         return true;
@@ -25,12 +25,6 @@ export async function fetchAccessToken(
   logger: Logger
 ): Promise<string> {
   const auth = config.auth;
-  if (auth.type !== "oauthClientCredentials") {
-    throw new Error(
-      "fetchAccessToken called but auth.type is not oauthClientCredentials"
-    );
-  }
-
   const now = Date.now();
   if (cachedAccessToken && cachedExpiresAt - TOKEN_EXPIRY_SKEW_MS > now) {
     return cachedAccessToken;
@@ -49,8 +43,6 @@ export async function fetchAccessToken(
   body.set("grant_type", "client_credentials");
   body.set("client_id", auth.clientId);
   body.set("client_secret", auth.clientSecret);
-  if (auth.scope) body.set("scope", auth.scope);
-  if (auth.audience) body.set("audience", auth.audience);
 
   logger.debug("Requesting OAuth access token from %s", auth.tokenUrl);
 
@@ -58,6 +50,9 @@ export async function fetchAccessToken(
     method: "POST",
     headers: {
       "content-type": "application/x-www-form-urlencoded",
+      Authorization: `Basic ${Buffer.from(
+        `${auth.clientId}:${auth.clientSecret}`
+      ).toString("base64")}`,
     },
     body: body.toString(),
   });

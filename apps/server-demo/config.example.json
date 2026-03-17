@@ -3,8 +3,7 @@
     "type": "oauthClientCredentials",
     "tokenUrl": "https://auth.example.com/oauth/token",
     "clientId": "your-client-id",
-    "clientSecret": "your-client-secret",
-    "scope": "openid profile"
+    "clientSecret": "your-client-secret"
   },
   "workday": {
     "tenantId": "mytenant",

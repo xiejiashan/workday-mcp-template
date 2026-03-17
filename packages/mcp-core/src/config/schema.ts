@@ -4,17 +4,17 @@ export const transportSchema = z.enum(["stdio", "http"]);
 export type Transport = z.infer<typeof transportSchema>;
 
 export const authConfigSchema = z.object({
-  type: z.enum(["none", "oauthClientCredentials"]).default("none"),
+  type: z.enum(["basic", "oauthClientCredentials"]).default("basic"),
   /** OAuth2 client_credentials token endpoint URL. Required when type is oauthClientCredentials. */
   tokenUrl: z.string().url().optional(),
   /** OAuth2 client id. */
   clientId: z.string().optional(),
   /** OAuth2 client secret. */
   clientSecret: z.string().optional(),
-  /** Optional OAuth2 scope (space-separated). */
-  scope: z.string().optional(),
-  /** Optional audience parameter for some IdPs. */
-  audience: z.string().optional(),
+  /** Basic username. */
+  username: z.string().optional(),
+  /** Basic password. */
+  password: z.string().optional(),
 });
 export type AuthConfig = z.infer<typeof authConfigSchema>;
 
@@ -37,7 +37,7 @@ export const serverConfigSchema = z.object({
   version: z.string().default("0.0.1"),
   transport: transportSchema.default("http"),
   logLevel: z.enum(["debug", "info", "warn", "error"]).default("info"),
-  auth: authConfigSchema.default({ type: "none" }),
+  auth: authConfigSchema.default({ type: "basic" }),
   workday: workdayConfigSchema.default({}),
   http: httpTransportConfigSchema.optional(),
 });

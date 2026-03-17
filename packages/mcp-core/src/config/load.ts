@@ -21,9 +21,7 @@ function fromEnv(): Record<string, unknown> {
     process.env[`${ENV_PREFIX}AUTH_TYPE`] != null ||
     process.env[`${ENV_PREFIX}AUTH_TOKEN_URL`] != null ||
     process.env[`${ENV_PREFIX}AUTH_CLIENT_ID`] != null ||
-    process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`] != null ||
-    process.env[`${ENV_PREFIX}AUTH_SCOPE`] != null ||
-    process.env[`${ENV_PREFIX}AUTH_AUDIENCE`] != null
+    process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`] != null
   ) {
     raw.auth = {
       ...(raw.auth as Record<string, unknown> | undefined),
@@ -38,12 +36,6 @@ function fromEnv(): Record<string, unknown> {
       }),
       ...(process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`] != null && {
         clientSecret: process.env[`${ENV_PREFIX}AUTH_CLIENT_SECRET`],
-      }),
-      ...(process.env[`${ENV_PREFIX}AUTH_SCOPE`] != null && {
-        scope: process.env[`${ENV_PREFIX}AUTH_SCOPE`],
-      }),
-      ...(process.env[`${ENV_PREFIX}AUTH_AUDIENCE`] != null && {
-        audience: process.env[`${ENV_PREFIX}AUTH_AUDIENCE`],
       }),
     };
   }
@@ -127,7 +119,7 @@ function defaultConfigObject(): Record<string, unknown> {
     version: "0.0.1",
     transport: "http",
     logLevel: "info",
-    auth: { type: "none" },
+    auth: { type: "basic" },
     workday: {},
     http: { port: 8787, host: "127.0.0.1", path: "/mcp" },
   };
