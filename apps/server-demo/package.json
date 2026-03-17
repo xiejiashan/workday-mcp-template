@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "pnpm --filter @workday-mcp/mcp-core build && pnpm build && node dist/index.js",
+    "client": "tsx scripts/mcp-client.ts",
     "validate:listJobPostings": "tsx scripts/validate-list-job-postings.ts"
   },
   "dependencies": {
